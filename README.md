@@ -1,3 +1,9 @@
+# KODIAK
+
+This fork seems more up to date
+https://github.com/JahezAcademy/feature_discovery
+Pulled PR https://github.com/ayalma/feature_discovery/commit/48af3f00d2b23bd68cd79ee07529221bc4ef16d2
+
 # feature_discovery
 
 This Flutter package implements Feature Discovery following the [Material Design guidelines](https://material.io/archive/guidelines/growth-communications/feature-discovery.html).  
