@@ -9,20 +9,14 @@ class BlocProvider extends StatelessWidget {
   final Widget child;
   final PersistenceProvider persistenceProvider;
 
-  const BlocProvider({
-    Key? key,
-    required this.child,
-    required this.persistenceProvider,
-  }) : super(key: key);
+  const BlocProvider({Key? key, required this.child, required this.persistenceProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Provider<Bloc>(
-        child: child,
-        create: (BuildContext context) => Bloc._(
-          persistenceProvider: persistenceProvider,
-        ),
-        dispose: (BuildContext context, Bloc bloc) => bloc._dispose(),
-      );
+    child: child,
+    create: (BuildContext context) => Bloc._(persistenceProvider: persistenceProvider),
+    dispose: (BuildContext context, Bloc bloc) => bloc._dispose(),
+  );
 }
 
 class Bloc {
@@ -33,16 +27,15 @@ class Bloc {
       return Provider.of<Bloc>(context, listen: false);
     } on ProviderNotFoundException {
       throw BlocNotFoundError(
-          'Could not find a FeatureDiscovery widget above this context.'
-          '\nFeatureDiscovery works like an inherited widget. You must wrap your widget tree in it.');
+        'Could not find a FeatureDiscovery widget above this context.'
+        '\nFeatureDiscovery works like an inherited widget. You must wrap your widget tree in it.',
+      );
     }
   }
 
   final PersistenceProvider persistenceProvider;
 
-  Bloc._({
-    required this.persistenceProvider,
-  });
+  Bloc._({required this.persistenceProvider});
 
   /// This [StreamController] allows to send events of type [EventType].
   /// The [DescribedFeatureOverlay]s will be able to handle these events by checking the
@@ -61,12 +54,10 @@ class Bloc {
 
   int? _activeStepIndex;
 
-  String? get activeFeatureId => _steps == null ||
-          _activeStepIndex == null ||
-          _activeStepIndex! >= _steps!.length ||
-          _activeStepIndex! < 0
-      ? null
-      : _steps![_activeStepIndex!];
+  String? get activeFeatureId =>
+      _steps == null || _activeStepIndex == null || _activeStepIndex! >= _steps!.length || _activeStepIndex! < 0
+          ? null
+          : _steps![_activeStepIndex!];
 
   /// This is used to determine if the active feature is already shown by
   /// another [DescribedFeatureOverlay] as [DescribedFeatureOverlay.allowShowingDuplicate]
@@ -101,10 +92,10 @@ class Bloc {
   }
 
   void discoverFeatures(Iterable<String> steps) async {
-    assert(steps.isNotEmpty,
-        'You need to pass at least one step to [FeatureDiscovery.discoverFeatures].');
+    assert(steps.isNotEmpty, 'You need to pass at least one step to [FeatureDiscovery.discoverFeatures].');
 
     _steps = steps as List<String?>?;
+    if (_steps == null) return;
     _stepsToIgnore = await _alreadyCompletedSteps;
     _steps = _steps!.where((s) => !_stepsToIgnore!.contains(s)).toList();
     _activeStepIndex = -1;
@@ -120,6 +111,7 @@ class Bloc {
   }
 
   Future<void> _nextStep() async {
+    if (_steps == null) return;
     if (activeFeatureId != null) unawaited(_saveCompletionOf(activeFeatureId));
     _activeStepIndex = _activeStepIndex! + 1;
     _activeOverlays = 0;
@@ -147,8 +139,7 @@ class Bloc {
     _stepsToIgnore?.add(featureId);
   }
 
-  Future<Set<String?>> get _alreadyCompletedSteps =>
-      persistenceProvider.completedSteps(_steps);
+  Future<Set<String?>> get _alreadyCompletedSteps => persistenceProvider.completedSteps(_steps);
 
   /// Returns true iff this step has been previously
   /// recorded as completed in the Shared Preferences
@@ -158,8 +149,7 @@ class Bloc {
     return _stepsToIgnore!.contains(featureId);
   }
 
-  Future<void> clearPreferences(Iterable<String> steps) async =>
-      persistenceProvider.clearSteps(steps);
+  Future<void> clearPreferences(Iterable<String> steps) async => persistenceProvider.clearSteps(steps);
 }
 
 /// These are the different types of the event that [Bloc]
@@ -173,11 +163,7 @@ class Bloc {
 ///  * [dismiss] signals that the overlay should attempt to dismiss itself, which happens
 ///    when the end user taps or swipes outside of the overlay or
 ///    [FeatureDiscovery.dismiss] is called manually.
-enum EventType {
-  open,
-  complete,
-  dismiss,
-}
+enum EventType { open, complete, dismiss }
 
 class BlocNotFoundError extends Error {
   final String message;
