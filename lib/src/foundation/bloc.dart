@@ -13,10 +13,10 @@ class BlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Provider<Bloc>(
-    child: child,
-    create: (BuildContext context) => Bloc._(persistenceProvider: persistenceProvider),
-    dispose: (BuildContext context, Bloc bloc) => bloc._dispose(),
-  );
+        child: child,
+        create: (BuildContext context) => Bloc._(persistenceProvider: persistenceProvider),
+        dispose: (BuildContext context, Bloc bloc) => bloc._dispose(),
+      );
 }
 
 class Bloc {
@@ -97,7 +97,7 @@ class Bloc {
     _steps = steps as List<String?>?;
     if (_steps == null) return;
     _stepsToIgnore = await _alreadyCompletedSteps;
-    _steps = _steps!.where((s) => !_stepsToIgnore!.contains(s)).toList();
+    if (_stepsToIgnore != null) _steps = _steps?.where((s) => !_stepsToIgnore!.contains(s)).toList();
     _activeStepIndex = -1;
 
     await _nextStep();
