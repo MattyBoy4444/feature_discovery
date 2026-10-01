@@ -1,5 +1,5 @@
 import 'package:feature_discovery/feature_discovery.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// This provides necessary components for constructing features during testing
 /// like [FeatureDiscover] and [MaterialApp].

@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:feature_discovery/src/foundation.dart';
 import 'package:feature_discovery/src/rendering.dart';
 import 'package:feature_discovery/src/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DescribedFeatureOverlay extends StatefulWidget {
   static const double kDefaultBackgroundOpacity = 0.96;
@@ -701,7 +701,7 @@ class _Background extends StatelessWidget {
         // The size is controlled in BackgroundContentLayoutDelegate.
         width: constraints.biggest.width,
         height: constraints.biggest.height,
-        decoration: BoxDecoration(shape: BoxShape.circle, color: color.withOpacity(opacity)),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: color.withValues(alpha: opacity)),
       ),
     );
 
@@ -788,7 +788,7 @@ class _Pulse extends StatelessWidget {
             height: radius * 2,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: color.withOpacity(opacity),
+              color: color.withValues(alpha: opacity),
             ),
           ),
         );

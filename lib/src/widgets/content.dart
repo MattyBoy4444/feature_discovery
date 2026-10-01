@@ -1,6 +1,6 @@
 import 'package:feature_discovery/src/rendering.dart';
 import 'package:feature_discovery/src/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Content extends StatelessWidget {
   final FeatureOverlayState state;
@@ -82,7 +82,7 @@ class Content extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
-                        .copyWith(color: textColor.withOpacity(0.9)),
+                        .copyWith(color: textColor.withValues(alpha: 0.9)),
                     child: description!,
                   )
               ],

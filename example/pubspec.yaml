@@ -21,7 +21,8 @@ publish_to: none
 dependencies:
   flutter:
     sdk: flutter
-
+  material_ui: any
+  
   feature_discovery:
     path: ../
 

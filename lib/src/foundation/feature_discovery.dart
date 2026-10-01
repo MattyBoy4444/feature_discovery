@@ -1,5 +1,5 @@
 import 'package:feature_discovery/src/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'persistence_provider.dart';
 
